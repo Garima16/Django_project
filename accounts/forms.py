@@ -1,10 +1,14 @@
 from django import forms
+import random
 from django.contrib.auth import (
     authenticate,
     get_user_model,
     login,
     logout
 )
+#from django.contrib.auth.models import get_hexadigest
+from .models import AccountHolder
+
 User = get_user_model()
 
 
@@ -28,17 +32,30 @@ class UserLoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    email = forms.EmailField(label='Email address')
+
+    #email = forms.EmailField(label='Email address')
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        model = User
-        fields = [
-            'username',
-            'email',
-            'password',
-        ]
+        model = AccountHolder
+        fields = (
+                'username',
+                'password',
+                'email',
+                'profile_photo',
+                'dob',
+                'about',
+        )
+
+
     """"
+    def set_password(self, raw_password):
+
+        algo = 'sha1'
+        salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
+        hsh = get_hexdigest(algo, salt, raw_password)
+        self.password = '%s$%s$%s' % (algo, salt, hsh)
+
     def clean_email2(self):
         email = self.cleaned_data.get('email')
         email2 = self.cleaned_data.get('email2')

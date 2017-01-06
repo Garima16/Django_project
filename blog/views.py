@@ -157,6 +157,21 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
+@login_required()
+def edit_profile(request):
+    if not request.user.is_authenticated():
+        return render(request, 'blog/login.html')
+    if request.method == "POST":
+        form = UserProfile(request.POST or None, request.FILES or None)#PostForm-name of form in forms.py #request.FILES for uploading image
+        if form.is_valid():
+            profile = form.save(commit=False)
+            form.save()
+            return redirect('blog.views.post_list')
+    else:
+        profile = UserProfile()
+    return render(request, 'blog/user_profile.html', {'profile': profile})
+
+
 @login_required
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True, author=request.user).order_by('created_date')

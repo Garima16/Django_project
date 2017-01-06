@@ -27,4 +27,6 @@ url(r'^post/(?P<pk>\d+)/publish/$', views.post_publish, name='post_publish'),
 
 url(r'^post/(?P<pk>\d+)/remove/$', views.confirm_post_delete, name='confirm_post_delete'),
 
+#url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+
 ]
