@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>{% block title %}BLOG{% endblock %}</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+              integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+
+            <div class="p">
+                <ul class="nav navbar-nav">
+                            <li class="head-link head-link-home"><a href="{% url 'post_list' %}" class="r" >
+
+                                <span class="glyphicon glyphicon-home"></span>
+                                Home
+                            </a></li>
+                </ul>
+            </div>
+           <div class="page-header">
+
+             <h1 align="center">BLOG</h1>
+
+           </div>
+
+            <div class="content container">
+                <div class="row">
+                    <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                    </div>
+
+                </div>
+            </div>
+    </body>
+</html>

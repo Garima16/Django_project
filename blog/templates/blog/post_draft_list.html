@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+		<h1 align="center">DRAFT</h1>
+{% for post in posts %}
+	<h2>Post Number #{{post.pk}}</h2>
+	<div class="post" >
+
+		<h3><a href="{% url 'post_detail' pk=post.pk  %}">{{ post.title}}</a></h3> <!--capitalise the first letter of 'Post title'
+	-->	<p>{{ post.text|truncatechars:200 }}</p>
+		<p class="date">created on: {{ post.created_date|date:'d-m-Y' }}</p>
+	</div>
+{% empty %}
+	<h3>Draft is empty.<br><br>All the posts have been published!</h3>
+{% endfor %}
+{% endblock %}

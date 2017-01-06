@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+{% for post in posts %}
+{% if post.is_favorite %}
+
+
+                   <div class="col-sm-4 col-lg-3">
+                        <div class="thumbnail">
+
+                            <div class="caption">
+
+
+                                <h2><a href="{% url 'post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
+
+                                <div class="date">posted by:{{post.author}}</div><br>
+                                {% if post.image %}
+                                <img src="{{post.image.url}}" class="img-responsive" alt="{{post.title}}" height="200" width="200" >
+                                {% endif %}
+                                <br>
+
+                                <a  href="{% url 'post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >Read full post <i class="fa fa-book" ></i>
+                            </a>
+                                <div class="date"> <br>
+                        <p>published on:<br> {{ post.published_date }}</p>
+
+
+
+
+</a><br>
+
+
+
+                     </div>
+                            </div>
+                        </div>
+                    </div>
+{% endif %}
+{%  empty %}
+<h3>
+No bookmarks yet!
+</h3>
+
+{% endfor %}
+{% endblock %}

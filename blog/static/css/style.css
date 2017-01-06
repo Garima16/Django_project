@@ -1,0 +1,133 @@
+/*@-webkit-keyframes e{
+    from{background-color:#EDB55A;}
+    to{background-color:#DE5426;}
+}*/
+.navbar{
+    border-radius:0;
+}
+.navbar-brand{
+    font-family:'Satisfy',cursive;
+}
+
+.p{
+    font-size: x-large;
+    font-family: "Arial Black";
+    background-color: midnightblue ;
+    text-decoration: none;
+}
+
+.r{
+    text-decoration: none;
+}
+
+.comment {
+margin: 20px 0px 20px 20px;
+}
+
+.button1{
+    background-color:darkgreen; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.page-header {
+    /*background-color:indianred ;*/
+    background-color:midnightblue;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+    /*-webkit-animation-name: e; Chrome, Safari, Opera */
+    /*-webkit-animation-duration: 200s;  Chrome, Safari, Opera */
+    font-size:200pt;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff; /*text:white color*/
+    font-size: 50pt;
+    text-decoration: none;
+    /*-webkit-animation-name: e;  Chrome, Safari, Opera */
+    /*-webkit-animation-duration: 4s;  Chrome, Safari, Opera */
+}
+
+.content {
+    margin-left: 40px;
+
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Lobster', cursive;
+    color:green;
+}
+
+.date {
+    color: #828282;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu1, .top-menu1:hover, .top-menu1:visited {
+    color: #ffffff;
+    float: left;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+
+.fa-bookmark{
+    color:gold;
+}
+.fa-bookmark-o{
+    color:gold;
+}
+
+.top-menu2, .top-menu2:hover, .top-menu2:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
+.top-menu, .top-menu:hover, .top-menu:visited {
+
+    font-family: "Times New Roman", Times, serif;   
+
+    font-size: 20pt;
+}
+
+.post {
+    margin-bottom: 70px;
+}
+
+.post h1 a, .post h1 a:visited {
+    color: #000000;
+    }
+.d{
+    font-size: xx-large;
+}
+ .well {
+    float: left;
+    margin: 10px;
+    border: 3px outset; 
+    background-color: #DCF249;
+}
+   
+small{
+    color:black;
+}
+
+.g:link    {color:green; background-color:transparent;
+    text-decoration:none;}
+.g:hover   {color:darkblue; background-color:transparent;
+    text-decoration:none;}
+.g:active  {color:black; background-color:transparent;
+    text-decoration:none;}

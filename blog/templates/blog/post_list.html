@@ -1,0 +1,236 @@
+{% load staticfiles %}
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>BLOG</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+              integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+
+<nav class="navbar navbar-inverse">
+        <div class="container-field" >
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar"><!--display lines in right column when screensize is reduced-->
+                    <span class="icon-bar"></span> <!--3 span tags for 3 lines-->
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!--{% if user.is_authenticated %}-->
+
+
+         </div>
+
+                <div class="navbar-brand" >
+                           Welcome {{user.username}}!
+                    </div>
+            </div>
+                    <div class="collapse navbar-collapse" id="topNavBar"><!--these lists will be hidden-->
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="{% url 'post_new' %}"> <!--adding new posts-->
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;
+                                    Add a Post
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="{% url 'post_draft_list' %}"> <!--publish posts in draft-->
+                                    <span class="glyphicon glyphicon-edit"></span>&nbsp;
+                                    Pending Posts
+                                </a>
+                            </li>
+                            <li class="">
+                            <a href="{% url 'bookmark' %}"><i class="fa fa-bookmark"></i>
+                                Bookmarks
+                            </a>
+                            </li>
+                        </ul>
+                         <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="{% url 'logout' %}">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;
+                                Logout
+                                </a>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-right" role="search" method="get" action="#">
+                            <div class="input-group">
+                                 <span class="input-group-btn">
+
+                                    <input type="text" class="form-control" name="q" value='{{request.GET.q}}' placeholder="Search Posts" />
+                                    <button type="submit" class="btn btn-default">
+                                        Search
+                                        <i class="fa fa-search " ></i>
+                                    </button>
+                                 </span>
+                            </div>
+
+                        </form>
+
+
+
+                   </div>
+              </div>
+                {% else %}
+
+
+
+                       <!-- <span class="glyphicon glyphicon-lock"></span>-->
+<div class="collapse navbar-collapse" id="topNavBar"><!--these lists will be hidden-->
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="{% url 'login' %}"> <!--adding new posts-->
+                                 <div id="d">   Login</div>
+
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="{% url 'register' %}"> <!--adding new posts-->
+                                 <div id="d">   Register</div>
+
+                                </a>
+                            </li>
+                        </ul>
+
+                        <form class="navbar-form navbar-right" role="search" method="get" action="#">
+                            <div class="input-group">
+                                 <span class="input-group-btn">
+
+                                    <input type="text" class="form-control" name="q" value='{{request.GET.q}}' placeholder="Search Posts" />
+                                    <button type="submit" class="btn btn-default">
+                                        Search
+                                        <i class="fa fa-search " ></i>
+                                    </button>
+                                 </span>
+                            </div>
+
+                        </form>
+
+
+
+                   </div>
+              </div>
+
+
+                {% endif %}
+
+
+    </nav>
+     <div class="p">
+  <!--<div class="navbar-brand" >--> <a href="{% url 'post_list' %}"  class="r">
+
+                        <span class="glyphicon glyphicon-home"></span>
+                        Home&nbsp; &nbsp;
+                        </a>
+
+                   <!-- </div>-->
+         </div>
+<div class="page-header">
+
+     <h1 align="center"><a href="/">BLOG</a></h1>
+       </div>
+ {% for post in queryset %}
+                   <!-- <div class="well">-->
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="thumbnail">
+
+                            <div class="caption">
+                                {% if post.is_favorite %}
+                                <a href="{% url 'post_favorite' pk=post.pk %}"><i class="fa fa-bookmark fa-2x"></i></a>
+                                {% else %}
+                                <a href="{% url 'post_favorite' pk=post.pk %}"><i class="fa fa-bookmark-o fa-2x"></i></a>
+                                {% endif %}
+                                <h2><a href="{% url 'post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
+
+                                <div class="date">posted by:{{post.author}}</div><br>
+                                {% if post.image %}
+                                <img src="{{post.image.url}}" class="img-responsive" alt="{{post.title}}" height="200" width="200" >
+                                {% endif %}
+                                <br>
+
+                                {{post.text|truncatewords:20}}
+                                <a  href="{% url 'post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >
+
+                                        Read full post
+                                        <i class="fa fa-book" ></i>
+                                </a>
+                                <div class="date"> <br>
+                        <p>published on:<br> {{ post.published_date }}</p>
+
+                                        {% if  post.comments.count == 0 %}
+
+                                    <p>    No comments :( </p>
+
+
+                                    {% else %}
+                                     <p>  <a href="{% url 'post_detail' pk=post.pk %}#view_comment"> View Comments <i class="fa fa-comments "></i></a></p>
+                                    {% endif %}
+
+                                            <a class="btn btn-default" href="{% url 'add_comment' pk=post.pk %}"> Comment
+
+</a><br>
+
+
+                        <!-- {% if user.is_authenticated %}-->
+                     <br>    <a class="btn btn-default" href="{% url 'confirm_post_delete' pk=post.pk %}"><span class="glyphicon glyphicon-trash"></span>Delete Post</a>
+                        <!--{% endif %}-->
+
+                     </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<p >{{ post.text|linebreaks }}</p>-->
+
+                {% empty %}
+<h3>
+    No posts to show :(
+</h3>
+
+
+            {% endfor %}
+{% if queryset %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if queryset.has_previous %}
+            <a href="?page={{ queryset.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}.
+        </span>
+
+        {% if queryset.has_next %}
+            <a href="?page={{ queryset.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+
+
+
+
+    <div class="content container">
+        <div class="row">
+            {% block content %}
+            {% endblock %}
+            <div class="col-md-8">
+            </div>
+
+        </div>
+    </div>
+    </body>
+</html>
