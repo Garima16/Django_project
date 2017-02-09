@@ -13,7 +13,7 @@
                             <div class="caption">
 
 
-                                <h2><a href="{% url 'post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
+                                <h2><a href="{% url 'blog:post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
 
                                 <div class="date">posted by:{{post.author}}</div><br>
                                 {% if post.image %}
@@ -21,7 +21,7 @@
                                 {% endif %}
                                 <br>
 
-                                <a  href="{% url 'post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >Read full post <i class="fa fa-book" ></i>
+                                <a  href="{% url 'blog:post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >Read full post <i class="fa fa-book" ></i>
                             </a>
                                 <div class="date"> <br>
                         <p>published on:<br> {{ post.published_date }}</p>

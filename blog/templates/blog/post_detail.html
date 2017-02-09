@@ -15,12 +15,12 @@
 
             <div class="post">
                 {% if user.is_authenticated %}
-                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
+                    <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}">
                         Edit post
                             <span class="glyphicon glyphicon-edit"></span>
                     </a>
 
-                    <a class="btn btn-default" href="{% url 'confirm_post_delete' pk=post.pk %}">
+                    <a class="btn btn-default" href="{% url 'blog:confirm_post_delete' pk=post.pk %}">
                         Delete post
                             <span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -51,7 +51,7 @@
                             </p>
                     </div>
                         <br>
-                        <a class="btn btn-default" href="{% url 'add_comment' pk=post.pk %}">
+                        <a class="btn btn-default" href="{% url 'blog:add_comment' pk=post.pk %}">
                             Comment
                             <i class="fa fa-comment-2x"></i>
                         </a>
@@ -66,22 +66,32 @@
         {% for comment in post.comments.all %}<br>
             {% if user.is_authenticated or comment.approved_comment %}
                 <strong>{{ comment.author }}</strong>
-                    <p>{{ comment.comment|linebreaks }}</p>
+                    <p>{{ comment.content|linebreaks }}</p>
 
                     <div class="date">
 
                          - {{comment.timestamp|timesince}} ago
                     </div>
+                   <!--
+                        {% for comment_child in comment.children %}
+                        {{ comment_child.content|linebreaks }}
+
+                    {% endfor %}
+                <a class="btn btn-default" href="{% url 'blog:add_comment' pk=post.pk %}">
+                            Reply
+                            <i class="fa fa-comment-2x"></i>
+                        </a>
+                        -->
 
                 <div class="cmnts-right pull-right btn-margin">
                      {% if user.is_authenticated %}
-                        <a href="{% url 'comment_remove' pk=comment.pk %}">
+                        <a href="{% url 'blog:comment_remove' pk=comment.pk %}">
                             <span class="glyphicon glyphicon-remove"></span>
                                 Delete
                         </a>&nbsp;
                      {% endif %}
                      {% if not comment.approved_comment %}
-                        <a href="{% url 'comment_approve' pk=comment.pk %}">
+                        <a href="{% url 'blog:comment_approve' pk=comment.pk %}">
                             <span class="glyphicon glyphicon-ok"></span>
                                 Approve
                         </a>
@@ -96,7 +106,7 @@
             {% endfor %}
 
             {% else %}
-                    <a class="btn btn-default" href="{% url 'blog.views.post_publish' pk=post.pk %}">Publish</a><br>
+                    <a class="btn btn-default" href="{% url 'blog:blog.views.post_publish' pk=post.pk %}">Publish</a><br>
             {% endif %}
 
 

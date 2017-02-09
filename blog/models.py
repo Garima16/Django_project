@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils import timezone
 from .utils import reading_time, word_count
+from django.utils import timezone
 
 from django.contrib.auth.models import User
 
@@ -25,13 +25,17 @@ class Post(models.Model):
     is_favorite = models.BooleanField(default=False)
     word_count = models.IntegerField(null=True)
     read_time = models.IntegerField(default=0)  # assuming read time is in minutes
+    #id = models.IntegerField()
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'pk': self.pk})
+        return reverse('blog:post_detail', kwargs={'pk': self.pk})
+
+    def get_api_url(self):
+        return reverse("posts-api:detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.title
@@ -50,10 +54,11 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')  # linked to Post model via the name 'comments'
     author = models.CharField(max_length=200)
-    comment = models.TextField(default=None)
+    content = models.TextField(default=None)
     created_time = models.DateTimeField(default=timezone.now())
     approved_comment = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    #parent = models.ForeignKey("self", blank=True, null=True)
 
     class Meta:
         ordering = ['-timestamp']
@@ -63,4 +68,14 @@ class Comment(models.Model):
         self.save()
 
     def __str__(self):
-        return self.comment
+        return self.content
+"""
+    def children(self):
+        return Comment.objects.filter(parent=self)
+
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
+
+"""

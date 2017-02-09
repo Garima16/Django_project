@@ -18,7 +18,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = (
             'author',
-            'comment',
+            'content',
         )
 
 """"

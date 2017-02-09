@@ -13,7 +13,7 @@
                 <p style="font-size: large" align="justify">Are you sure you want to delete <br> the post titled </p>
                 <p style="font-size: x-large"> " {{object.title}} " ?</p>
                 <input type="submit" value="Confirm" class="btn btn-warning">
-                <a href="{% url 'post_detail' pk=object.pk %}" class="btn btn-default">
+                <a href="{% url 'blog:post_detail' pk=object.pk %}" class="btn btn-default">
                     Cancel
                 </a>
 

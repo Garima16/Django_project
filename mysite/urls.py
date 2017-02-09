@@ -19,26 +19,28 @@ Including another URLconf
 from django.conf.urls import include, url
 import django.contrib.auth.views
 from django.contrib import admin
-admin.autodiscover()
-
 from django.conf import settings
 from django.conf.urls.static import static
+admin.autodiscover()
+
+
 from accounts.views import (
     login_view,
     logout_view,
     register_view,
+    change_password
 )
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('blog.urls')),
+    url(r'', include('blog.urls', namespace='blog')),
     url(r'^login/$', login_view, name='login'),
     url(r'^logout/$', logout_view, name='logout'),
     url(r'^register/$', register_view, name='register'),
+    url(r'^password_change/$', change_password, name='password_change'),
     #url(r'^accounts/login/$', django.contrib.auth.views.login, name='login'),
     #url(r'^accounts/logout/$', django.contrib.auth.views.logout, name='logout', kwargs
     #= {'next_page': '/'}),
-    url(r'^api/posts/', include("blog.api.urls", namespace='posts-api')),
 
 
 ]

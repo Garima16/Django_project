@@ -1,13 +1,9 @@
 from django import forms
-import random
 from django.contrib.auth import (
     authenticate,
     get_user_model,
-    login,
-    logout
 )
-#from django.contrib.auth.models import get_hexadigest
-from .models import AccountHolder
+
 
 User = get_user_model()
 
@@ -37,14 +33,11 @@ class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        model = AccountHolder
+        model = User
         fields = (
                 'username',
                 'password',
                 'email',
-                'profile_photo',
-                'dob',
-                'about',
         )
 
 
@@ -56,6 +49,7 @@ class UserRegistrationForm(forms.ModelForm):
         hsh = get_hexdigest(algo, salt, raw_password)
         self.password = '%s$%s$%s' % (algo, salt, hsh)
 
+
     def clean_email2(self):
         email = self.cleaned_data.get('email')
         email2 = self.cleaned_data.get('email2')
@@ -65,4 +59,14 @@ class UserRegistrationForm(forms.ModelForm):
         if email_qs.exists:
             raise forms.ValidationError("This email is already registered!")
         return email
-    """
+
+"""
+
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput,
+                                   help_text='Choose a password consisting of alphabets in upper and lower case,special character and number')
+    confirm_password = forms.CharField(widget=forms.PasswordInput,
+                                       help_text='Type the same password as above')
+
+

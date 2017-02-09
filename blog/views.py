@@ -26,7 +26,7 @@ def add_comment(request, pk):
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
-            return redirect('blog.views.post_detail', pk=post.pk)
+            return redirect('blog:blog.views.post_detail', pk=post.pk)
     else:
         form = CommentForm()
     context = {
@@ -83,7 +83,24 @@ def post_detail(request, pk):
         post.read_time = read_time
         wc = post.count_words()
         post.word_count = wc
-        return render(request, 'blog/post_detail.html', {'post': post, 'user': user})
+        """
+        parent_obj = None
+        try:
+            parent_id = int(request.POST.get("parent_id"))
+        except:
+            parent_id = None
+
+        if parent_id:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists() and parent_qs.count() == 1:
+                parent_obj = parent_qs.first()
+        """
+        context = {
+            'post': post,
+            'user': user,
+            #'parent' : parent_obj
+        }
+        return render(request, 'blog/post_detail.html', context)
 
 
 def mypost_list(request):
@@ -105,7 +122,7 @@ def post_favorite(request, pk):
     else:
         post.is_favorite = True
     post.save()
-    return redirect('blog.views.post_list')
+    return redirect('blog:blog.views.post_list')
 
 
 @login_required
@@ -135,7 +152,7 @@ def post_new(request):
             ##post.published_date = timezone.now()
             form.save()
             messages.success(request, "New post successfully created!")
-            return redirect('post_detail', pk=post.pk)
+            return redirect('blog:post_detail', pk=post.pk)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -151,7 +168,7 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save() #save the corresponding changes in database
-            return redirect('post_detail', pk=post.pk)
+            return redirect('blog:post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -183,7 +200,8 @@ def confirm_post_delete(request, pk):
     object = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         object.delete()
-        return redirect('blog.views.post_list')
+        return redirect('blog:blog.views.post_list')
+    context = {'object': object}
     context = {'object': object}
     return render(request, 'blog/confirm_post_delete.html', context)
 
@@ -193,14 +211,14 @@ def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
     #messages.success(request, "Post successfully published!")
-    return redirect('blog.views.post_detail', pk=post.pk) 	#return redirect('blog.views.post_detail', pk=pk)
+    return redirect('blog:blog.views.post_detail', pk=post.pk) 	#return redirect('blog.views.post_detail', pk=pk)
 
 
 @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
-    return redirect('blog.views.post_detail', pk=comment.post.pk)
+    return redirect('blog:blog.views.post_detail', pk=comment.post.pk)
 
 
 @login_required
@@ -208,4 +226,4 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk
     comment.delete()
-    return redirect('blog.views.post_detail', pk=post_pk)
+    return redirect('blog:blog.views.post_detail', pk=post_pk)

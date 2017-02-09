@@ -37,20 +37,20 @@
                     <div class="collapse navbar-collapse" id="topNavBar"><!--these lists will be hidden-->
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href="{% url 'post_new' %}"> <!--adding new posts-->
+                                <a href="{% url 'blog:post_new' %}">
                                     <span class="glyphicon glyphicon-plus"></span>&nbsp;
                                     Add a Post
                                 </a>
                             </li>
 
                             <li class="">
-                                <a href="{% url 'post_draft_list' %}"> <!--publish posts in draft-->
+                                <a href="{% url 'blog:post_draft_list' %}"> <!--publish posts in draft-->
                                     <span class="glyphicon glyphicon-edit"></span>&nbsp;
                                     Pending Posts
                                 </a>
                             </li>
                             <li class="">
-                            <a href="{% url 'bookmark' %}"><i class="fa fa-bookmark"></i>
+                            <a href="{% url 'blog:bookmark' %}"><i class="fa fa-bookmark"></i>
                                 Bookmarks
                             </a>
                             </li>
@@ -129,7 +129,7 @@
 
     </nav>
      <div class="p">
-  <!--<div class="navbar-brand" >--> <a href="{% url 'post_list' %}"  class="r">
+         <a href="{% url 'blog:post_list' %}"  class="r">
 
                         <span class="glyphicon glyphicon-home"></span>
                         Home&nbsp; &nbsp;
@@ -137,22 +137,35 @@
 
                    <!-- </div>-->
          </div>
+    <div class="p">
+        <a href="{% url 'password_change' %}" class="r">
+            Change Password
+        </a>
+    </div>
 <div class="page-header">
 
      <h1 align="center"><a href="/">BLOG</a></h1>
        </div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{message.tag}}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
  {% for post in queryset %}
+
                    <!-- <div class="well">-->
                     <div class="col-sm-4 col-lg-3">
                         <div class="thumbnail">
 
                             <div class="caption">
                                 {% if post.is_favorite %}
-                                <a href="{% url 'post_favorite' pk=post.pk %}"><i class="fa fa-bookmark fa-2x"></i></a>
+                                <a href="{% url 'blog:post_favorite' pk=post.pk %}"><i class="fa fa-bookmark fa-2x"></i></a>
                                 {% else %}
-                                <a href="{% url 'post_favorite' pk=post.pk %}"><i class="fa fa-bookmark-o fa-2x"></i></a>
+                                <a href="{% url 'blog:post_favorite' pk=post.pk %}"><i class="fa fa-bookmark-o fa-2x"></i></a>
                                 {% endif %}
-                                <h2><a href="{% url 'post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
+                                <h2><a href="{% url 'blog:post_detail' pk=post.pk %}"><div class="g">{{ post.title }}</div></a></h2>
 
                                 <div class="date">posted by:{{post.author}}</div><br>
                                 {% if post.image %}
@@ -161,7 +174,7 @@
                                 <br>
 
                                 {{post.text|truncatewords:20}}
-                                <a  href="{% url 'post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >
+                                <a  href="{% url 'blog:post_detail' pk=post.pk%}"  class="btn btn-primary btn-sm" role="button" >
 
                                         Read full post
                                         <i class="fa fa-book" ></i>
@@ -175,16 +188,16 @@
 
 
                                     {% else %}
-                                     <p>  <a href="{% url 'post_detail' pk=post.pk %}#view_comment"> View Comments <i class="fa fa-comments "></i></a></p>
+                                     <p>  <a href="{% url 'blog:post_detail' pk=post.pk %}#view_comment"> View Comments <i class="fa fa-comments "></i></a></p>
                                     {% endif %}
 
-                                            <a class="btn btn-default" href="{% url 'add_comment' pk=post.pk %}"> Comment
+                                            <a class="btn btn-default" href="{% url 'blog:add_comment' pk=post.pk %}"> Comment
 
 </a><br>
 
 
                         <!-- {% if user.is_authenticated %}-->
-                     <br>    <a class="btn btn-default" href="{% url 'confirm_post_delete' pk=post.pk %}"><span class="glyphicon glyphicon-trash"></span>Delete Post</a>
+                     <br>    <a class="btn btn-default" href="{% url 'blog:confirm_post_delete' pk=post.pk %}"><span class="glyphicon glyphicon-trash"></span>Delete Post</a>
                         <!--{% endif %}-->
 
                      </div>
@@ -218,6 +231,8 @@
         {% endif %}
     </span>
 </div>
+
+
 {% endif %}
 
 
